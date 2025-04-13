@@ -79,10 +79,13 @@ async def receive_webhook(event: WebhookEvent) -> JSONResponse:
                 "status": "success",
                 "message": f"Записано распознавание для {full_name}"
             }
+            logger.info(f"Ответ вебхука (успех): {response}") # Добавлено логирование
             return JSONResponse(content=response, media_type="application/json; charset=utf-8")
         else:
             logger.info(f"Уверенность ниже порога (0.7): {confidence}, данные не записаны")
-            return JSONResponse(content={"status": "skipped", "message": "Уверенность ниже порога"})
+            response = {"status": "skipped", "message": "Уверенность ниже порога"}
+            logger.info(f"Ответ вебхука (пропущено): {response}") # Добавлено логирование
+            return JSONResponse(content=response)
     except Exception as e:
         logger.error(f"Ошибка обработки вебхука: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -101,10 +104,13 @@ async def log_recognition_event(event: RecognitionEvent) -> JSONResponse:
                 "status": "success",
                 "message": f"Записано распознавание для {full_name}"
             }
+            logger.info(f"Ответ /recognition (успех): {response}") # Добавлено логирование
             return JSONResponse(content=response, media_type="application/json; charset=utf-8")
         else:
             logger.info(f"Уверенность ниже порога (0.7): {event.confidence}, данные не записаны")
-            return JSONResponse(content={"status": "skipped", "message": "Уверенность ниже порога"})
+            response = {"status": "skipped", "message": "Уверенность ниже порога"}
+            logger.info(f"Ответ /recognition (пропущено): {response}") # Добавлено логирование
+            return JSONResponse(content=response)
     except Exception as e:
         logger.error(f"Ошибка при обработке события распознавания: {e}")
         raise HTTPException(status_code=500, detail=str(e))
