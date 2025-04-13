@@ -1,0 +1,6 @@
+face_recognition_system.egg-info/PKG-INFO
+face_recognition_system.egg-info/SOURCES.txt
+face_recognition_system.egg-info/dependency_links.txt
+face_recognition_system.egg-info/entry_points.txt
+face_recognition_system.egg-info/requires.txt
+face_recognition_system.egg-info/top_level.txt
